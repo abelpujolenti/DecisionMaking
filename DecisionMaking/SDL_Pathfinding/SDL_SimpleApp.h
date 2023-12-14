@@ -2,8 +2,9 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Scene.h"
-#include "Vector2D.h"
+
+struct Vector2D;
+class Scene;
 
 #define SRC_WIDTH 1280
 #define SRC_HEIGHT 768

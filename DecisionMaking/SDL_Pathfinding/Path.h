@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-#include "Vector2D.h"
+
+struct Vector2D;
 
 struct Path
 {

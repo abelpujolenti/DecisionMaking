@@ -1,4 +1,5 @@
 #include "SceneGOAP.h"
+#include "PathFollowing.h"
 
 using namespace std;
 
