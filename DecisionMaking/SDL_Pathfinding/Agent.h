@@ -4,8 +4,8 @@
 #include <SDL_image.h>
 #include "SDL_SimpleApp.h"
 #include "Path.h"
-#include "Vector2D.h"
 #include "utils.h"
+#include "Vector2D.h"
 
 
 class Agent

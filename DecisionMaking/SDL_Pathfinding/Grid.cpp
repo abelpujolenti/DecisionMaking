@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include "Agent.h"
 
 using namespace std;
 

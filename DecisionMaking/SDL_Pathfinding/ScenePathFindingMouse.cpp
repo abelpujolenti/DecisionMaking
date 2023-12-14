@@ -1,4 +1,5 @@
 #include "ScenePathFindingMouse.h"
+#include "PathFollowing.h"
 
 using namespace std;
 

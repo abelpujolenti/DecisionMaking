@@ -1,4 +1,6 @@
 #include "SDL_SimpleApp.h"
+#include "Vector2D.h"
+#include "Scene.h"
 
 using namespace std;
 
