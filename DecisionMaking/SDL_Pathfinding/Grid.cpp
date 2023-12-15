@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Grid::Grid(char* filename)
+Grid::Grid(const char* filename)
 {
 	num_cell_x = SRC_WIDTH / CELL_SIZE;
 	num_cell_y = SRC_HEIGHT / CELL_SIZE;

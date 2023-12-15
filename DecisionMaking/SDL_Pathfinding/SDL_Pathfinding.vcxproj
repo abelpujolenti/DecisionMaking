@@ -132,7 +132,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="AgentGOAP.cpp" />
+    <ClCompile Include="AlgorithmGOAP.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="WorldState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFollowing.cpp" />
     <ClCompile Include="SceneFSM.cpp" />
@@ -143,8 +146,13 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionGOAP.h" />
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="AgentGOAP.h" />
+    <ClInclude Include="AlgorithmGOAP.h" />
+    <ClInclude Include="GoalState.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="WorldState.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathFollowing.h" />
     <ClInclude Include="Scene.h" />

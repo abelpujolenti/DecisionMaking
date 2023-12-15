@@ -15,7 +15,7 @@ private:
 	std::vector< std::vector<int> > terrain;
 
 public:
-	Grid(char* filename);
+	Grid(const char* filename);
 	~Grid();
 	Vector2D cell2pix(Vector2D cell);
 	Vector2D pix2cell(Vector2D pix);
