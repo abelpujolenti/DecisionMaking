@@ -45,6 +45,12 @@
     <ClCompile Include="SceneGOAP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WorldState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PointerState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h">
@@ -81,6 +87,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneGOAP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PointerState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

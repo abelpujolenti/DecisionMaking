@@ -135,18 +135,21 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFollowing.cpp" />
+    <ClCompile Include="PointerState.cpp" />
     <ClCompile Include="SceneFSM.cpp" />
     <ClCompile Include="SceneGOAP.cpp" />
     <ClCompile Include="ScenePathFindingMouse.cpp" />
     <ClCompile Include="SDL_SimpleApp.cpp" />
     <ClCompile Include="Seek.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathFollowing.h" />
+    <ClInclude Include="PointerState.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFSM.h" />
     <ClInclude Include="SceneGOAP.h" />
@@ -155,6 +158,7 @@
     <ClInclude Include="Seek.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="WorldState.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\spritesheet.png" />
