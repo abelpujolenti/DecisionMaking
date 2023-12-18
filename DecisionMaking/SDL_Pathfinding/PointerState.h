@@ -1,14 +1,18 @@
 #pragma once
-typedef void (*func_t)();
+typedef void (*funcPointer)(void);
+
+class Enemy;
 
 class PointerState
 {
 protected:
-	func_t enter;
-	func_t exit;
-	func_t update;
+	Enemy* context;
+	void (Enemy::*enter)();
+	void (Enemy::*exit)();
+	void (Enemy::*update)();
 public:
-	PointerState(func_t enter, func_t exit, func_t update);
+	PointerState(Enemy* context, void (Enemy::*enter)(), void (Enemy::*exit)(), void (Enemy::*update)());
+	PointerState();
 	void Enter();
 	void Exit();
 	void Update();

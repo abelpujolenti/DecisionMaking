@@ -4,8 +4,9 @@
 class PFSM
 {
 protected:
-	PointerState currentState;
+	PointerState* currentState;
 public:
+	PFSM(PointerState defaultState);
 	PointerState GetCurrentState();
 	void SetState(PointerState newState);
 };

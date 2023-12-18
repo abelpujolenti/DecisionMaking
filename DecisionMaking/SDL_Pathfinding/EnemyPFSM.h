@@ -1,16 +1,16 @@
 #pragma once
 #include "PFSM.h"
+#include <map>
+#include <iostream>
 
 class EnemyPFSM :
     public PFSM
 {
 private:
-    PointerState wanderState;
-    PointerState chaseState;
-    PointerState fleeState;
+    std::map<std::string, PointerState> states;
 public:
-    void SetWanderState();
-    void SetChaseState();
-    void SetFleeState();
+    EnemyPFSM(PointerState defaultState);
+    void AddState(std::string name, PointerState newState);
+    void SetStateByName(std::string name);
 };
 

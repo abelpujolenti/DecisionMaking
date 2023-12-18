@@ -1,16 +1,17 @@
 #include "EnemyPFSM.h"
 
-void EnemyPFSM::SetWanderState()
+EnemyPFSM::EnemyPFSM(PointerState defaultState) : PFSM(defaultState)
 {
-	SetState(wanderState);
 }
 
-void EnemyPFSM::SetChaseState()
+void EnemyPFSM::AddState(std::string name, PointerState newState)
 {
-	SetState(chaseState);
+	states[name] = newState;
 }
 
-void EnemyPFSM::SetFleeState()
+void EnemyPFSM::SetStateByName(std::string name)
 {
-	SetState(fleeState);
+	SetState(states[name]);
 }
+
+

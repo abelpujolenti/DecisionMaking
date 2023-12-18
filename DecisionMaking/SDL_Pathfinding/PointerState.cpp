@@ -1,23 +1,32 @@
 #include "PointerState.h"
 
-PointerState::PointerState(func_t enter, func_t exit, func_t update)
+PointerState::PointerState(Enemy* context, void (Enemy::*enter)(), void (Enemy::*exit)(), void (Enemy::*update)())
 {
+	this->context = context;
 	this->enter = enter;
 	this->exit = exit;
 	this->update = update;
 }
 
+PointerState::PointerState()
+{
+	context = nullptr;
+	enter = nullptr;
+	exit = nullptr;
+	update = nullptr;
+}
+
 void PointerState::Enter()
 {
-	enter();
+	(*context.*enter)();
 }
 
 void PointerState::Exit()
 {
-	exit();
+	(*context.*exit)();
 }
 
 void PointerState::Update()
 {
-	update();
+	(*context.*update)();
 }

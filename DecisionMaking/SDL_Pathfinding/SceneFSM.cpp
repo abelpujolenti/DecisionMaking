@@ -3,6 +3,12 @@
 
 using namespace std;
 
+#define ENEMY_AMOUNT 3
+
+void test() {
+	std::cout << "lmao";
+}
+
 SceneFSM::SceneFSM()
 {
 	draw_grid = false;
@@ -19,16 +25,28 @@ SceneFSM::SceneFSM()
 	agents.push_back(agent);
 
 	// set agent position coords to the center of a random cell
-	Vector2D rand_cell(-1,-1);
-	while (!maze->isValidCell(rand_cell))
-		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	agents[0]->setPosition(maze->cell2pix(rand_cell));
+	Vector2D intialPlayerPosition(-1,-1);
+	while (!maze->isValidCell(intialPlayerPosition))
+		intialPlayerPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	agents[0]->setPosition(maze->cell2pix(intialPlayerPosition));
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
-	while ((!maze->isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell)<3))
+	while ((!maze->isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, intialPlayerPosition)<3))
 		coinPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 
+	for (int i = 0; i < ENEMY_AMOUNT; i++) {
+		Enemy* enemy = new Enemy();
+		enemy->loadSpriteTexture("../res/zombie1.png", 8);
+		enemy->setBehavior(new PathFollowing);
+
+		Vector2D enemyPosition = Vector2D(-1, -1);
+		while ((!maze->isValidCell(enemyPosition)) || (Vector2D::Distance(enemyPosition, intialPlayerPosition) < 3))
+			enemyPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+		enemy->setPosition(maze->cell2pix(enemyPosition));
+
+		enemies.push_back(enemy);
+	}
 }
 
 SceneFSM::~SceneFSM()
@@ -38,9 +56,13 @@ SceneFSM::~SceneFSM()
 	if (coin_texture)
 		SDL_DestroyTexture(coin_texture);
 
-	for (int i = 0; i < (int)agents.size(); i++)
+	for (int i = 0; i < agents.size(); i++)
 	{
 		delete agents[i];
+	}
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		delete enemies[i];
 	}
 }
 
@@ -76,6 +98,10 @@ void SceneFSM::update(float dtime, SDL_Event *event)
 			coinPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 	}
 	
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->update(dtime, event);
+	}
 }
 
 void SceneFSM::draw()
@@ -97,6 +123,11 @@ void SceneFSM::draw()
 	}
 
 	agents[0]->draw();
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->draw();
+	}
 }
 
 const char* SceneFSM::getTitle()
