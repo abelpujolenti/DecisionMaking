@@ -1,11 +1,14 @@
 #pragma once
 #include "Agent.h"
 #include "EnemyPFSM.h"
+#include "Player.h"
 
 class Enemy :
     public Agent
 {
 private:
+    Player* player;
+
     EnemyPFSM* enemyPFSM;
     void WanderEnter();
     void WanderExit();
@@ -17,7 +20,10 @@ private:
     void FleeExit();
     void FleeUpdate();
 public:
-    Enemy();
+    float chaseDistance = 15;
+    float fleeDistance = 25;
+
+    Enemy(Grid* layer, Player* player);
     void update(float dtime, SDL_Event* event) override;
 };
 

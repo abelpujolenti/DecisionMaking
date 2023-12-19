@@ -6,6 +6,8 @@
 #include "Path.h"
 #include "utils.h"
 #include "Vector2D.h"
+#include "Grid.h"
+#include "PathFindingAlgorithm.h"
 
 
 class Agent
@@ -18,14 +20,15 @@ public:
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
 	};
-private:
-	SteeringBehavior *steering_behaviour;
+protected:
+	PathFindingAlgorithm* pathfinding;
+	SteeringBehavior* steeringBehaviour;
 	Vector2D position;
 	Vector2D velocity;
 	Vector2D target;
 
 	// Pathfinding
-	Path path;
+	Path* path;
 	int currentTargetIndex;
 
 	float mass;
@@ -35,12 +38,15 @@ private:
 
 	SDL_Texture *sprite_texture;
 	bool draw_sprite;
+	bool draw_path;
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
 
+	Grid* layer;
+
 public:
-	Agent();
+	Agent(Grid* layer);
 	~Agent();
 	Vector2D getPosition();
 	Vector2D getTarget();
@@ -48,6 +54,7 @@ public:
 	float getMaxVelocity();
 	float getMaxForce();
 	float getMass();
+	void setPathfinding(PathFindingAlgorithm *p);
 	void setBehavior(SteeringBehavior *behavior);
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
@@ -55,6 +62,7 @@ public:
 	void addPathPoint(Vector2D point);
 	void setCurrentTargetIndex(int idx);
 	int getCurrentTargetIndex();
+	int LoadPath(Vector2D start, Vector2D end, const Grid& layer) const;
 	int getPathSize();
 	Vector2D getPathPoint(int idx);
 	void clearPath();

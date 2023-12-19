@@ -15,7 +15,7 @@ SceneGOAP::SceneGOAP()
 
 	srand((unsigned int)time(NULL));
 
-	Agent *agent = new Agent;
+	Agent *agent = new Agent(maze);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setBehavior(new PathFollowing);
 	agent->setTarget(Vector2D(-20,-20));
@@ -23,20 +23,20 @@ SceneGOAP::SceneGOAP()
 
 	// set agent position coords to the center of a random cell in the Black room
 	Vector2D rand_cell(-1,-1);
-	while ((!maze->isValidCell(rand_cell)) || (maze->getCellValue(rand_cell) != Color::Black))
+	while ((!maze->isValidCell(rand_cell)) || (maze->GetCellWeight(rand_cell) != Color::Black))
 		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 	agents[0]->setPosition(maze->cell2pix(rand_cell));
 
 	// set the coin in a random cell (but not in the Black room)
 	coinPosition = Vector2D(-1,-1);
-	while ((!maze->isValidCell(coinPosition)) || (maze->getCellValue(coinPosition) == Color::Black))
+	while ((!maze->isValidCell(coinPosition)) || (maze->GetCellWeight(coinPosition) == Color::Black))
 		coinPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 
 	// set keys in in a random cell (but not in the room of its same color)
 	for (int i=Color::Red; i<8; i++)
 	{
 		keyPositions[i] = Vector2D(-1,-1);
-		while ((!maze->isValidCell(keyPositions[i])) || (maze->getCellValue(keyPositions[i]) == i))
+		while ((!maze->isValidCell(keyPositions[i])) || (maze->GetCellWeight(keyPositions[i]) == i))
 			keyPositions[i] = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 	}
 
@@ -144,7 +144,7 @@ void SceneGOAP::drawMaze()
 				rect = { (int)coords.x, (int)coords.y, CELL_SIZE, CELL_SIZE };
 				SDL_RenderFillRect(TheApp::Instance()->getRenderer(), &rect);
 			} else {
-				int cell_color = maze->getCellValue(Vector2D((float)i, (float)j));
+				int cell_color = maze->GetCellWeight(Vector2D((float)i, (float)j));
 				if (cell_color == Color::Black)
 					continue; // Do not draw if it is not necessary (bg is already black)
 				switch (cell_color)
