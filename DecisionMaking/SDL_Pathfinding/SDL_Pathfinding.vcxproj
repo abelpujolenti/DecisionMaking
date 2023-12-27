@@ -134,6 +134,8 @@
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AgentGOAP.cpp" />
     <ClCompile Include="AlgorithmGOAP.cpp" />
+    <ClCompile Include="AStar.cpp" />
+    <ClCompile Include="Dijstra.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="WorldState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -150,8 +152,11 @@
     <ClInclude Include="Agent.h" />
     <ClInclude Include="AgentGOAP.h" />
     <ClInclude Include="AlgorithmGOAP.h" />
+    <ClInclude Include="AStar.h" />
+    <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="GoalState.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="WorldState.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathFollowing.h" />
@@ -163,6 +168,7 @@
     <ClInclude Include="Seek.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2D.h" />
+    <ClInclude Include="WorldStateNode.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\spritesheet.png" />

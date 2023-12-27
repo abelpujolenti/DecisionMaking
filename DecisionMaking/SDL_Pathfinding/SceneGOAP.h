@@ -6,6 +6,8 @@
 #include <time.h>
 #include "Scene.h"
 #include "Grid.h"
+#include "Dijkstra.h"
+#include "AStar.h"
 
 #define PATH_MAZE_ROOMS_CSV "../res/maze_rooms.csv"
 #define HAS_COIN "Has Coin"
@@ -25,13 +27,22 @@ class SceneGOAP : public Scene
 private:
 	std::unique_ptr<AgentGOAP> _agentGoap;
 
+	Dijkstra* dijkstraAlgorithm;
+	AStar* aStarAlgorithm;
+
 	std::vector<std::unique_ptr<ActionGOAP>> _actionsGoap;
 	
 	std::unique_ptr<Vector2D> _coinPosition;
 	std::unique_ptr<Vector2D[]> _keyPositions;
+	std::vector<int> _keyRooms;
+	std::vector<std::string> _keys;
+	std::vector<ActionGOAP> actionsToDo;
 	Vector2D keyPositions[8];
 
-	std::unique_ptr<Grid> _maze;
+	bool walking;
+	bool started;
+
+	Grid* _maze;
 
 	bool draw_grid;
 
@@ -44,6 +55,7 @@ private:
 	bool loadTextures(char* filename_bg, char* filename_coin, char* filename_keys);
 	void CreateActionsGOAP();
 	void CreateWorldState() const;
+	void CalculateAStar(Vector2D objective);
 	
 public:
 	SceneGOAP();

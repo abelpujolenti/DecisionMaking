@@ -13,7 +13,7 @@ char *color_strings[8] = {"White", "Black", "Red", "Orange", "Yellow", "Green", 
 SceneGOAP::SceneGOAP() :
 	_coinPosition(std::make_unique<Vector2D>()),
 	_keyPositions(std::make_unique<Vector2D[]>(8)),
-	_maze(std::make_unique<Grid>(PATH_MAZE_ROOMS_CSV))
+	_maze(new Grid(PATH_MAZE_ROOMS_CSV))
 {
 	_worldState = std::make_unique<WorldState>();
 
@@ -52,20 +52,6 @@ SceneGOAP::SceneGOAP() :
 	
 	for (int i=Color::Red; i<8; i++)
 	{
-		/*do
-		{
-			do
-			{
-				_keyPositions[i] = Vector2D((float)(rand() % _maze->getNumCellX()), (float)(rand() % _maze->getNumCellY()));	
-			}
-			while (i == 7 && !keyOnCenter && _maze->getCellValue(_keyPositions[i]) != Black);			
-		}
-		while ((!_maze->isValidCell(_keyPositions[i])) || (_maze->getCellValue(_keyPositions[i]) == i));
-
-		if (!keyOnCenter)
-		{
-			keyOnCenter = _maze->getCellValue(_keyPositions[i]) == Black;
-		}*/
 		do
 		{
 			do
@@ -81,10 +67,30 @@ SceneGOAP::SceneGOAP() :
 			keyOnCenter = _maze->getCellValue(keyPositions[i]) == Color::Black;
 		}
 	}
+
+	//CreateActionsGOAP();
+
+	_keyRooms.push_back(_maze->getCellValue(*_coinPosition)-1);
+
+	for (int i = Color::Red; i < 8; i++)
+	{
+		_keyRooms.push_back(_maze->getCellValue(keyPositions[i])-1);
+	}
+
+	_keys.push_back(HAS_COIN);
+	_keys.push_back(HAS_RED_KEY);
+	_keys.push_back(HAS_ORANGE_KEY);
+	_keys.push_back(HAS_YELLOW_KEY);
+	_keys.push_back(HAS_GREEN_KEY);
+	_keys.push_back(HAS_BLUE_KEY);
+	_keys.push_back(HAS_PURPLE_KEY);
+
+	dijkstraAlgorithm = new Dijkstra(*_worldState, _keys, _keyRooms);
+
+	walking = false;
+	started = false;
 	
-	CreateActionsGOAP();
-	_agentGoap->SetKeyPositions(keyPositions);
-	_agentGoap->SetCoinPosition(*_coinPosition);
+	
 }
 
 
@@ -138,6 +144,12 @@ void SceneGOAP::update(float dtime, SDL_Event *event)
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
+		else if (event->key.keysym.scancode == SDL_SCANCODE_M)
+		{
+			actionsToDo = dijkstraAlgorithm->Calculate();
+			started = true;
+		}
+
 		break;
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
@@ -153,6 +165,19 @@ void SceneGOAP::update(float dtime, SDL_Event *event)
 		break;
 	}
 
+	if (!actionsToDo.empty())
+	{
+		if (!walking)
+		{
+			if (actionsToDo[0].key == 0)
+				CalculateAStar(*_coinPosition);
+			else
+				CalculateAStar(keyPositions[actionsToDo[0].key+1]);
+			walking = true;
+		}
+	}
+
+
 	_agentGoap->update(dtime, event);
 
 	// check if the agent has reached 
@@ -164,11 +189,16 @@ void SceneGOAP::update(float dtime, SDL_Event *event)
 			cout << "The Agent achieved its GOAL!." << endl;
 			// nothing to do here but clear the coin position (set coinPosition to -1,-1)
 			*_coinPosition = Vector2D(-1,-1);
+			actionsToDo.erase(actionsToDo.begin());
+			walking = false;
 		}
 		for (int i=Color::Red; i<8; i++)
 		{
 			if (_maze->pix2cell(_agentGoap->getPosition()) == keyPositions[i])
 			{
+				actionsToDo.erase(actionsToDo.begin());
+				walking = false;
+
 				cout << "Now the Agent has the " << color_strings[i] << " Key." << endl;
 				// clear the key texture (set key position to -1,-1)
 				keyPositions[i] = Vector2D(-1,-1);
@@ -315,4 +345,17 @@ bool SceneGOAP::loadTextures(char* filename_bg, char* filename_coin, char* filen
 
 
 	return true;
+}
+
+void SceneGOAP::CalculateAStar(Vector2D objective)
+{
+	// AStar
+	aStarAlgorithm = new AStar(_maze, objective, _agentGoap->getPosition());
+
+	vector<Vector2D> path = aStarAlgorithm->CalculatePath();
+
+	for (int i = 0; i < path.size(); i++)
+	{
+		_agentGoap->addPathPoint(path[i]);
+	}
 }
