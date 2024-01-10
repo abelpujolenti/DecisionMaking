@@ -62,12 +62,13 @@ std::vector<ActionGOAP> Dijkstra::Calculate()
 		newAction.currentState = true;
 		newAction.goalState = GoalState::TRUE;
 		
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 7; i++)
 		{
 			if (actualNode->state.GetMapValueByKey(keys[i]) !=
 				actualNode->cameFrom->state.GetMapValueByKey(keys[i]))
 			{
 				newAction.key = i;
+
 			}
 		}
 		 
@@ -79,7 +80,6 @@ std::vector<ActionGOAP> Dijkstra::Calculate()
 			reachedFirstNode = true;
 	}
 
-	std::cout << "Dijkstra Num Explored Nodes: " << visited.size() << std::endl;
 	return finalPath;
 }
 

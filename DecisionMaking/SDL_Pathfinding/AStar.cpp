@@ -76,7 +76,6 @@ std::vector<Vector2D> AStar::CalculatePath()
 			actualNode = actualNode->cameFrom;
 	}
 
-	std::cout << "A* Num Explored Nodes: " << visited.size() << std::endl;
 	return finalPath;
 }
 

@@ -133,7 +133,6 @@
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="AgentGOAP.cpp" />
-    <ClCompile Include="AlgorithmGOAP.cpp" />
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Dijstra.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -151,7 +150,6 @@
     <ClInclude Include="ActionGOAP.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="AgentGOAP.h" />
-    <ClInclude Include="AlgorithmGOAP.h" />
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="GoalState.h" />
