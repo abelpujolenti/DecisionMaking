@@ -1,7 +1,7 @@
 #include "AgentGOAP.h"
 #include "ActionGOAP.h"
 
-AgentGOAP::AgentGOAP()
+AgentGOAP::AgentGOAP(Grid* layer) : Agent(layer)
 {        
 }
 

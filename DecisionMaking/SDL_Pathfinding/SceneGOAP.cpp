@@ -25,7 +25,7 @@ SceneGOAP::SceneGOAP() :
 
 	srand((unsigned int)time(NULL));
 
-	_agentGoap = std::make_unique<AgentGOAP>();
+	_agentGoap = std::make_unique<AgentGOAP>(_maze);
 	_agentGoap->loadSpriteTexture("../res/soldier.png", 4);
 	_agentGoap->setBehavior(new PathFollowing);
 	_agentGoap->setTarget(Vector2D(-20,-20));
@@ -36,7 +36,7 @@ SceneGOAP::SceneGOAP() :
 	{
 		rand_cell = Vector2D((float)(rand() % _maze->getNumCellX()), (float)(rand() % _maze->getNumCellY()));		
 	}
-	while ((!_maze->isValidCell(rand_cell)) || (_maze->getCellValue(rand_cell) != Color::Black));
+	while ((!_maze->isValidCell(rand_cell)) || (_maze->GetCellWeight(rand_cell) != Color::Black));
 	_agentGoap->setPosition(_maze->cell2pix(rand_cell));
 
 	// set the coin in a random cell (but not in the Black room)
@@ -44,7 +44,7 @@ SceneGOAP::SceneGOAP() :
 	{		
 		*_coinPosition = Vector2D((float)(rand() % _maze->getNumCellX()), (float)(rand() % _maze->getNumCellY()));
 	}
-	while ((!_maze->isValidCell(*_coinPosition)) || (_maze->getCellValue(*_coinPosition) == Color::Black));
+	while ((!_maze->isValidCell(*_coinPosition)) || (_maze->GetCellWeight(*_coinPosition) == Color::Black));
 
 	// set keys in in a random cell (but not in the room of its same color)
 
@@ -58,23 +58,23 @@ SceneGOAP::SceneGOAP() :
 			{
 				keyPositions[i] = Vector2D((float)(rand() % _maze->getNumCellX()), (float)(rand() % _maze->getNumCellY()));	
 			}
-			while (i == 7 && !keyOnCenter && _maze->getCellValue(keyPositions[i]) != Color::Black);			
+			while (i == 7 && !keyOnCenter && _maze->GetCellWeight(keyPositions[i]) != Color::Black);			
 		}
-		while ((!_maze->isValidCell(keyPositions[i])) || (_maze->getCellValue(keyPositions[i]) == i));
+		while ((!_maze->isValidCell(keyPositions[i])) || (_maze->GetCellWeight(keyPositions[i]) == i));
 
 		if (!keyOnCenter)
 		{
-			keyOnCenter = _maze->getCellValue(keyPositions[i]) == Color::Black;
+			keyOnCenter = _maze->GetCellWeight(keyPositions[i]) == Color::Black;
 		}
 	}
 
 	//CreateActionsGOAP();
 
-	_keyRooms.push_back(_maze->getCellValue(*_coinPosition)-1);
+	_keyRooms.push_back(_maze->GetCellWeight(*_coinPosition)-1);
 
 	for (int i = Color::Red; i < 8; i++)
 	{
-		_keyRooms.push_back(_maze->getCellValue(keyPositions[i])-1);
+		_keyRooms.push_back(_maze->GetCellWeight(keyPositions[i])-1);
 	}
 
 	_keys.push_back(HAS_COIN);
@@ -103,14 +103,14 @@ void SceneGOAP::CreateActionsGOAP()
 		_actionsGoap.emplace_back(std::make_unique<ActionGOAP>());
 	}
 
-	int cellColor = _maze->getCellValue(*_coinPosition);
+	int cellColor = _maze->GetCellWeight(*_coinPosition);
 	_actionsGoap[8]->goalState = GoalState::TRUE;
 
 	while (cellColor != 1)
 	{		
 		_actionsGoap[cellColor]->goalState = GoalState::TRUE;
-		//cellColor = _maze->getCellValue(_keyPositions[cellColor]);
-		cellColor = _maze->getCellValue(keyPositions[cellColor]);
+		//cellColor = _maze->GetCellWeight(_keyPositions[cellColor]);
+		cellColor = _maze->GetCellWeight(keyPositions[cellColor]);
 	}
 }
 
@@ -250,7 +250,7 @@ void SceneGOAP::drawMaze()
 				rect = { (int)coords.x, (int)coords.y, CELL_SIZE, CELL_SIZE };
 				SDL_RenderFillRect(TheApp::Instance()->getRenderer(), &rect);
 			} else {
-				int cell_color = _maze->getCellValue(Vector2D((float)i, (float)j));
+				int cell_color = _maze->GetCellWeight(Vector2D((float)i, (float)j));
 				if (cell_color == Color::Black)
 					continue; // Do not draw if it is not necessary (bg is already black)
 				switch (cell_color)

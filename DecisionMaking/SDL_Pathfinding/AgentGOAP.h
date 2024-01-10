@@ -21,7 +21,7 @@ private:
     
     
 public:
-    AgentGOAP();
+    AgentGOAP(Grid* layer);
     ~AgentGOAP() = default;
     Vector2D GetMazeElementPositionByGivenIndex(int mazeElementIndex);
     
