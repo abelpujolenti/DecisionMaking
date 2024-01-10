@@ -16,4 +16,5 @@ public:
     
     void SetWorldStates(std::map<std::string, bool> states);
     bool GetMapValueByKey(std::string key);
+    void SetMapValueByKey(std::string key, bool value);
 };

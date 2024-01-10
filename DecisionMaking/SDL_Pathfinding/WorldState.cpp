@@ -9,3 +9,8 @@ bool WorldState::GetMapValueByKey(std::string key)
 {
     return _states[key];
 }
+
+void WorldState::SetMapValueByKey(std::string key, bool value)
+{
+    _states[key] = value;
+}

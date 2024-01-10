@@ -132,10 +132,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="AgentGOAP.cpp" />
+    <ClCompile Include="AStar.cpp" />
     <ClCompile Include="AStarAlgorithm.cpp" />
+    <ClCompile Include="Dijstra.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyPFSM.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="WorldState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PathFindingAlgorithm.cpp" />
     <ClCompile Include="PathFollowing.cpp" />
@@ -151,13 +155,18 @@
     <ClCompile Include="WorldState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionGOAP.h" />
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="AgentGOAP.h" />
+    <ClInclude Include="AStar.h" />
     <ClInclude Include="AStarAlgorithm.h" />
-    <ClInclude Include="ChaseState.h" />
+    <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyPFSM.h" />
-    <ClInclude Include="FleeState.h" />
+    <ClInclude Include="GoalState.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="WorldState.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathFindingAlgorithm.h" />
     <ClInclude Include="PathFollowing.h" />
@@ -172,8 +181,7 @@
     <ClInclude Include="Seek.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="WanderState.h" />
-    <ClInclude Include="WorldState.h" />
+    <ClInclude Include="WorldStateNode.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\spritesheet.png" />
